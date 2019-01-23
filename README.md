@@ -13,20 +13,18 @@ npm install --save bem-jsx
 ## Usage
 
 ```jsx
-import React, { Component } from "react"
+import React from "react"
 import block from "bem-jsx"
 
 const Form = block("Form", ["theme", "simple", "disabled"])
 
-class Example extends Component {
-  render() {
-    return (
-      <Form as="form" theme="xmas" simple>
-        <Form.Input as="input" type="text" />
-        <Form.Input as="input" type="submit" disabled />
-      </Form>
-    )
-  }
+function Example() {
+  return (
+    <Form as="form" theme="xmas" simple>
+      <Form.Input as="input" type="text" />
+      <Form.Input as="input" type="submit" disabled />
+    </Form>
+  )
 }
 ```
 
