@@ -1,6 +1,6 @@
 {
   "name": "bem-jsx",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Integrate BEM into your React app gracefully",
   "author": "dmitrykrylov",
   "license": "MIT",
@@ -63,5 +63,10 @@
   ],
   "dependencies": {
     "@emotion/is-prop-valid": "^0.7.3"
-  }
+  },
+  "keywords": [
+    "bem",
+    "jsx",
+    "react"
+  ]
 }

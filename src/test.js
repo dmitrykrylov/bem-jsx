@@ -1,13 +1,65 @@
 import React from "react"
 import { shallow } from "enzyme"
-// import block from "./index"
+import block from "./index"
 
-it("renders without crashing", () => {
-  // const Block = block("Block");
+describe("without modifiers", () => {
+  const Block = block("Block")
 
-  // shallow(<Block />);
+  it("renders block without crashing", () => {
+    shallow(<Block />)
+  })
 
-  // Why commented out code throws an error?
+  it("renders element without crashing", () => {
+    shallow(<Block.Element />)
+  })
 
-  shallow(<div />)
+  it("renders block with class", () => {
+    const wrapper = shallow(<Block />)
+    expect(wrapper.html()).toEqual('<div class="Block"></div>')
+  })
+
+  it("renders element with class", () => {
+    const wrapper = shallow(<Block.Element />)
+    expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
+  })
+
+  it("renders element with class", () => {
+    const wrapper = shallow(<Block.Element />)
+    expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
+  })
+
+  it("renders block with modifier", () => {
+    const wrapper = shallow(<Block.Element />)
+    expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
+  })
+})
+
+describe("without modifiers", () => {
+  const Block = block("Block", ["theme", "featured"])
+
+  it("renders block with non-boolean modifier", () => {
+    const wrapper = shallow(<Block theme="xmas" />)
+    expect(wrapper.html()).toEqual(
+      '<div class="Block Block--theme_xmas"></div>'
+    )
+  })
+
+  it("renders block with boolean modifier", () => {
+    const wrapper = shallow(<Block featured />)
+    expect(wrapper.html()).toEqual('<div class="Block Block--featured"></div>')
+  })
+
+  it("renders block with non-boolean modifier", () => {
+    const wrapper = shallow(<Block.Element theme="xmas" />)
+    expect(wrapper.html()).toEqual(
+      '<div class="Block__Element Block__Element--theme_xmas"></div>'
+    )
+  })
+
+  it("renders element with boolean modifier", () => {
+    const wrapper = shallow(<Block.Element featured />)
+    expect(wrapper.html()).toEqual(
+      '<div class="Block__Element Block__Element--featured"></div>'
+    )
+  })
 })

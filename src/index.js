@@ -46,13 +46,24 @@ function block(blockName, modifiers) {
     get(target, prop) {
       if (
         [
+          "__reactAutoBindPairs",
           "_owner",
+          "_self",
           "_source",
           "_store",
           "$$typeof",
+          "apply",
+          "defaultProps",
+          "displayName",
+          "getDefaultProps",
           "key",
+          "name",
           "props",
+          "propTypes",
+          "PropTypes",
+          "prototype",
           "ref",
+          "tag",
           "type"
         ].indexOf(prop) > -1
       ) {
@@ -60,9 +71,6 @@ function block(blockName, modifiers) {
       }
 
       const elementClassname = `${blockName}__${prop}`
-
-      proxy.getDefaultProps = undefined
-      proxy.defaultProps = {}
 
       return createComponent(elementClassname, modifiers)
     }

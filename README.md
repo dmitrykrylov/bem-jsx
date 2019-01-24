@@ -18,14 +18,12 @@ import block from "bem-jsx"
 
 const Form = block("Form", ["theme", "simple", "disabled"])
 
-function Example() {
-  return (
-    <Form as="form" theme="xmas" simple>
-      <Form.Input as="input" type="text" />
-      <Form.Input as="input" type="submit" disabled />
-    </Form>
-  )
-}
+const Example = () => (
+  <Form as="form" theme="xmas" simple>
+    <Form.Input as="input" type="text" />
+    <Form.Input as="input" type="submit" disabled />
+  </Form>
+)
 ```
 
 It will produce the following piece of HTML:
