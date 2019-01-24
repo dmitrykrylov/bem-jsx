@@ -23,6 +23,16 @@ describe("without modifiers", () => {
     expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
   })
 
+  it("renders block with tag", () => {
+    const wrapper = shallow(<Block as="span" />)
+    expect(wrapper.html()).toEqual('<span class="Block"></span>')
+  })
+
+  it("renders element with tag", () => {
+    const wrapper = shallow(<Block.Element as="span" />)
+    expect(wrapper.html()).toEqual('<span class="Block__Element"></span>')
+  })
+
   it("renders element with class", () => {
     const wrapper = shallow(<Block.Element />)
     expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
