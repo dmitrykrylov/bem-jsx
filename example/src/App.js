@@ -8,7 +8,7 @@ export default function App() {
   return (
     <Form as="form" theme="xmas" simple>
       <Form.Input as="input" type="text" />
-      <Form.Input as="input" type="submit" disabled />
+      <Form.Submit as="input" type="submit" disabled />
     </Form>
   )
 }
