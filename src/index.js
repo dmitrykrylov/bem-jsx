@@ -41,38 +41,45 @@ const createComponent = (className, modifiers = []) => {
 
 function block(blockName, modifiers) {
   const block = createComponent(blockName, modifiers)
+  const elements = {}
+
+  const reactElementOwnProperties = [
+    "__reactAutoBindPairs",
+    "_owner",
+    "_self",
+    "_source",
+    "_store",
+    "$$typeof",
+    "apply",
+    "defaultProps",
+    "childContextTypes",
+    "displayName",
+    "getDefaultProps",
+    "getDerivedStateFromProps",
+    "key",
+    "name",
+    "props",
+    "propTypes",
+    "PropTypes",
+    "prototype",
+    "ref",
+    "tag",
+    "type"
+  ]
 
   const proxy = new Proxy(block, {
     get(target, prop) {
-      if (
-        [
-          "__reactAutoBindPairs",
-          "_owner",
-          "_self",
-          "_source",
-          "_store",
-          "$$typeof",
-          "apply",
-          "defaultProps",
-          "displayName",
-          "getDefaultProps",
-          "key",
-          "name",
-          "props",
-          "propTypes",
-          "PropTypes",
-          "prototype",
-          "ref",
-          "tag",
-          "type"
-        ].indexOf(prop) > -1
-      ) {
-        return block[prop]
+      if (reactElementOwnProperties.indexOf(prop) > -1) {
+        return target[prop]
       }
 
-      const elementClassname = `${blockName}__${prop}`
-
-      return createComponent(elementClassname, modifiers)
+      if (prop in elements) {
+        return elements[prop]
+      } else {
+        const elementClassname = `${blockName}__${prop}`
+        elements[prop] = createComponent(elementClassname, modifiers)
+        return elements[prop]
+      }
     }
   })
 
