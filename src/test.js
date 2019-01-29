@@ -38,8 +38,8 @@ describe("without modifiers", () => {
     expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
   })
 
-  it("renders block with modifier", () => {
-    const wrapper = shallow(<Block.Element />)
+  it("renders block with non-specified modifier", () => {
+    const wrapper = shallow(<Block.Element featured />)
     expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
   })
 })
