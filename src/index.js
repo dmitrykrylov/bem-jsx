@@ -2,12 +2,14 @@ import React from "react"
 import validAttr from "@emotion/is-prop-valid"
 
 const createComponent = (className, modifiers = []) => {
-  return ({ as = "div", className: ownClassName, ...otherProps }) => {
-    let fullClassName = className
-    const propsForElement = {}
+  return React.forwardRef((props, ref) => {
+    const { as = "div", className: ownClassName, ...otherProps } = props
+    const propsForElement = { ref }
     const isTargetTag = isTag(as)
 
+    let fullClassName = className
     let key
+
     for (key in otherProps) {
       if (key === "forwardedComponent" || key === "as") continue
       else if (key === "forwardedRef") propsForElement.ref = otherProps[key]
@@ -36,7 +38,7 @@ const createComponent = (className, modifiers = []) => {
     propsForElement.className = fullClassName
 
     return React.createElement(as, propsForElement)
-  }
+  })
 }
 
 function block(blockName, modifiers) {
@@ -63,6 +65,7 @@ function block(blockName, modifiers) {
     "PropTypes",
     "prototype",
     "ref",
+    "render",
     "tag",
     "type"
   ]

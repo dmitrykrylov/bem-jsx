@@ -1,4 +1,6 @@
 import React from "react"
+import { findDOMNode } from "react-dom"
+import { renderIntoDocument } from "react-dom/test-utils"
 import { shallow } from "enzyme"
 import block from "./index"
 
@@ -41,6 +43,26 @@ describe("without modifiers", () => {
   it("renders block with non-specified modifier", () => {
     const wrapper = shallow(<Block.Element featured />)
     expect(wrapper.html()).toEqual('<div class="Block__Element"></div>')
+  })
+
+  it("should pass the ref to the component", () => {
+    class Wrapper extends React.Component {
+      setRef = e => {
+        this.componentName = e
+      }
+
+      render() {
+        return (
+          <div>
+            <Block ref={this.setRef} />
+          </div>
+        )
+      }
+    }
+
+    const wrapper = renderIntoDocument(<Wrapper />)
+    const component = findDOMNode(wrapper).querySelector(".Block")
+    expect(wrapper.componentName).toBe(component)
   })
 })
 
