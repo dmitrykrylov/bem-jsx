@@ -1,13 +1,36 @@
 import React from "react"
 import validAttr from "@emotion/is-prop-valid"
 
-const createComponent = (className, modifiers = []) => {
+const createComponent = (
+  blockClassName,
+  elementClassName,
+  modifiers = [],
+  config = {}
+) => {
   return React.forwardRef((props, ref) => {
+    const {
+      elementSeparator = "__",
+      modifierSeparator = "--",
+      modifierValueSeparator = "_",
+      kebabCase = false
+    } = config
+
+    const format = kebabCase ? camelToKebab : str => str
+
     const { as = "div", className: ownClassName, ...otherProps } = props
+
     const propsForElement = { ref }
+
     const isTargetTag = isTag(as)
 
-    let fullClassName = className
+    let baseClassName = format(blockClassName)
+
+    if (elementClassName) {
+      baseClassName += `${elementSeparator}${format(elementClassName)}`
+    }
+
+    let fullClassName = baseClassName
+
     let key
 
     for (key in otherProps) {
@@ -19,13 +42,15 @@ const createComponent = (className, modifiers = []) => {
       }
 
       if (modifiers.indexOf(key) > -1) {
-        fullClassName += " "
+        const modifierClassName = format(key)
+
         if (typeof otherProps[key] === "boolean") {
           if (otherProps[key]) {
-            fullClassName += `${className}--${key}`
+            fullClassName += ` ${baseClassName}${modifierSeparator}${modifierClassName}`
           }
         } else {
-          fullClassName += `${className}--${key}_${otherProps[key]}`
+          const value = otherProps[key]
+          fullClassName += ` ${baseClassName}${modifierSeparator}${modifierClassName}${modifierValueSeparator}${value}`
         }
       }
     }
@@ -41,8 +66,8 @@ const createComponent = (className, modifiers = []) => {
   })
 }
 
-function block(blockName, modifiers) {
-  const block = createComponent(blockName, modifiers)
+function block(blockName, modifiers, config = {}) {
+  const block = createComponent(blockName, null, modifiers, config)
   const elements = {}
 
   const reactElementOwnProperties = [
@@ -79,8 +104,7 @@ function block(blockName, modifiers) {
       if (prop in elements) {
         return elements[prop]
       } else {
-        const elementClassname = `${blockName}__${prop}`
-        elements[prop] = createComponent(elementClassname, modifiers)
+        elements[prop] = createComponent(blockName, prop, modifiers, config)
         return elements[prop]
       }
     }
@@ -96,6 +120,10 @@ function isTag(target) {
       ? target.charAt(0) === target.charAt(0).toLowerCase()
       : true)
   )
+}
+
+function camelToKebab(string) {
+  return string.replace(/([a-z])([A-Z])/g, "$1-$2").toLowerCase()
 }
 
 export default block

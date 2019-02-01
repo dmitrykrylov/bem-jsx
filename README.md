@@ -41,6 +41,14 @@ It will produce the following piece of HTML:
 
 - `blockClassName` : **string**, required
 - `modifiers` : **Array\<string\>**, optional
+- `config` : **Object**, optional
+
+`config` object reference:
+
+- `elementSeparator`: **string**, optional, _default_: `'__'`
+- `modifierSeparator`: **string**, optional, _default_: `'--'`
+- `modifierValueSeparator`: **string**, optional, _default_: `'_'`
+- `kebabCase`: **string**, optional, _default_: `false`
 
 Let's create a Block. It can do a lot!
 
