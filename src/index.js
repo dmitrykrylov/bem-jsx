@@ -42,15 +42,17 @@ const createComponent = (
       }
 
       if (modifiers.indexOf(key) > -1) {
-        const modifierClassName = format(key)
+        const mofifier = format(key)
 
         if (typeof otherProps[key] === "boolean") {
           if (otherProps[key]) {
-            fullClassName += ` ${baseClassName}${modifierSeparator}${modifierClassName}`
+            fullClassName += " "
+            fullClassName += `${baseClassName}${modifierSeparator}${mofifier}`
           }
         } else {
           const value = otherProps[key]
-          fullClassName += ` ${baseClassName}${modifierSeparator}${modifierClassName}${modifierValueSeparator}${value}`
+          fullClassName += " "
+          fullClassName += `${baseClassName}${modifierSeparator}${mofifier}${modifierValueSeparator}${value}`
         }
       }
     }
